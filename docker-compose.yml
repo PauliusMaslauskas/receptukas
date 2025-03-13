@@ -1,6 +1,16 @@
 version: '3.8'
 
 services:
+    app:
+        build: .
+        container_name: laravel_app
+        ports:
+            - "5173:5173"
+        volumes:
+            - ./:/var/www
+        environment:
+            APP_DEBUG: "true"
+            APP_URL: "http://localhost"
     mysql:
         image: mysql:8.0
         container_name: receptukas
