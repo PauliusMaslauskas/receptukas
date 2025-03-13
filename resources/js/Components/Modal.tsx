@@ -12,11 +12,13 @@ export default function Modal({
     maxWidth = '2xl',
     closeable = true,
     onClose = () => {},
+    isOpen,
 }: PropsWithChildren<{
     show: boolean;
     maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
     closeable?: boolean;
     onClose: CallableFunction;
+    isOpen?: boolean;
 }>) {
     const close = () => {
         if (closeable) {
