@@ -55,4 +55,9 @@ class Product extends Authenticatable
     {
         return $this->belongsTo(ProductCategory::class);
     }
+
+    public function recipe()
+    {
+        return $this->belongsTo(Recipe::class);
+    }
 }

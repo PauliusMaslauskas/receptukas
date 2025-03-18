@@ -1,7 +1,7 @@
+import TextInput from '@/Components/Form/TextInput';
 import Modal from '@/Components/Modal';
 import PrimaryButton from '@/Components/PrimaryButton';
 import ProductCard from '@/Components/ProductCard';
-import TextInput from '@/Components/TextInput';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 

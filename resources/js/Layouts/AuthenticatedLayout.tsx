@@ -24,6 +24,12 @@ export default function AuthenticatedLayout({
 
                     <div className="hidden items-center space-x-4 sm:flex">
                         <NavLink
+                            href={route('home')}
+                            active={route().current('home')}
+                        >
+                            Home
+                        </NavLink>
+                        <NavLink
                             href={route('carts.index')}
                             active={route().current('dashboard')}
                         >
@@ -111,7 +117,9 @@ export default function AuthenticatedLayout({
                 </header>
             )}
 
-            <main className="px-4 py-6 sm:px-6 lg:px-8">{children}</main>
+            <main className="mx-auto max-w-4xl px-6 py-6 sm:px-12 lg:px-24">
+                {children}
+            </main>
 
             <nav className="fixed bottom-0 left-0 right-0 flex justify-around bg-neutral-light py-2 shadow-md sm:hidden dark:bg-gray-800">
                 <NavItem href={route('dashboard')} icon="🏠" label="Home" />
