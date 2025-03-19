@@ -29,7 +29,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('products-categories', [ProductController::class, 'getProductsWithCategories'])->name('products.categories');
 
-    Route::get('recipes', [RecipeController::class, 'index'])->name('recipes.index');
+    Route::prefix('recipe')->group(function () {
+        Route::get('/', [RecipeController::class, 'index'])->name('recipes.index');
+        Route::get('/{id}', [RecipeController::class, 'show'])->name('recipe.show');
+    });
+
 });
 
 require __DIR__ . '/auth.php';

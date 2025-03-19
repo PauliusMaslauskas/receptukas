@@ -14,4 +14,12 @@ class RecipeController extends Controller
             'recipes' => $recipes ?? []
         ]);
     }
+
+    public function show($id)
+    {
+        $recipe = Recipe::where('id', $id)->first();
+        return Inertia::render('Recipes/RecipeView', [
+            'recipe' => $recipe
+        ]);
+    }
 }
