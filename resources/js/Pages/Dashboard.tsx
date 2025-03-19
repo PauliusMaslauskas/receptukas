@@ -13,21 +13,6 @@ export default function Dashboard() {
         >
             <div className="px-4 py-6 sm:px-6 lg:px-8">
                 <div className="mb-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {/*<DashboardCard*/}
-                    {/*    title="Total Recipes"*/}
-                    {/*    value="152"*/}
-                    {/*    icon="🍲"*/}
-                    {/*/>*/}
-                    {/*<DashboardCard*/}
-                    {/*    title="Saved Favorites"*/}
-                    {/*    value="43"*/}
-                    {/*    icon="❤️"*/}
-                    {/*/>*/}
-                    {/*<DashboardCard*/}
-                    {/*    title="Profile Views"*/}
-                    {/*    value="1,230"*/}
-                    {/*    icon="👀"*/}
-                    {/*/>*/}
                     <a href={'/cart'}>
                         <DashboardCard title="" value="My Carts" icon="🛒" />
                     </a>
