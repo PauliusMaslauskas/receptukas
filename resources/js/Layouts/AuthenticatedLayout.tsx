@@ -2,6 +2,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
+import { BadgePlus, House, LogOut, ShoppingBasket, User } from 'lucide-react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
 
 export default function AuthenticatedLayout({
@@ -122,20 +123,25 @@ export default function AuthenticatedLayout({
             </main>
 
             <nav className="fixed bottom-0 left-0 right-0 flex justify-around bg-neutral-light py-2 shadow-md sm:hidden dark:bg-gray-800">
-                <NavItem href={route('dashboard')} icon="🏠" label="Home" />
+                <NavItem href={route('home')} icon={<House />} label="Home" />
                 <NavItem
                     href={route('profile.edit')}
-                    icon="👤"
+                    icon={<User />}
                     label="Profile"
                 />
                 <NavItem
+                    href={route('recipe.create')}
+                    icon={<BadgePlus />}
+                    label="Create"
+                />
+                <NavItem
                     href={route('carts.index')}
-                    icon="🛒"
+                    icon={<ShoppingBasket />}
                     label="My carts"
                 />
                 <NavItem
                     href={route('logout')}
-                    icon="🚪"
+                    icon={<LogOut />}
                     label="Logout"
                     method="post"
                 />

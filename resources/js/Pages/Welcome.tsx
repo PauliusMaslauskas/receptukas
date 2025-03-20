@@ -4,6 +4,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { PageProps } from '@/types';
 import { Link } from '@inertiajs/react';
+import { CookingPot, Users } from 'lucide-react';
+import React from 'react';
 
 export default function Welcome({
     auth,
@@ -42,11 +44,9 @@ export default function Welcome({
 
                         {recipes &&
                             recipes.map((recipe, index) => (
-                                <div className="mb-4 rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-                                    <a href={''}>
-                                        <RecipeCard recipe={recipe} />
-                                    </a>
-                                </div>
+                                <a href={''}>
+                                    <RecipeCard recipe={recipe} />
+                                </a>
                             ))}
                     </>
                 )}
@@ -55,12 +55,12 @@ export default function Welcome({
                     <DashboardCard
                         title="Recipes Available"
                         value={recipes.length}
-                        icon="🍲"
+                        icon={<CookingPot size={36} />}
                     />
                     <DashboardCard
                         title="Users on Platform"
                         value={usersCount}
-                        icon="👥"
+                        icon={<Users size={36} />}
                     />
                 </div>
             </div>

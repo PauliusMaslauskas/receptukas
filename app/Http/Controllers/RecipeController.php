@@ -17,9 +17,19 @@ class RecipeController extends Controller
 
     public function show($id)
     {
-        $recipe = Recipe::where('id', $id)->first();
+        $recipe = Recipe::with('instructions')->find($id);
         return Inertia::render('Recipes/RecipeView', [
             'recipe' => $recipe
         ]);
+    }
+
+    public function create()
+    {
+        return Inertia::render('Recipes/RecipeCreate');
+    }
+
+    public function store()
+    {
+
     }
 }
