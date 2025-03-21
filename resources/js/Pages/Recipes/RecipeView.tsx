@@ -8,7 +8,7 @@ interface RecipeProps {
 
 export default function RecipeComponent({ recipe }: RecipeProps): JSX.Element {
     return (
-        <AuthenticatedLayout title={recipe.name}>
+        <AuthenticatedLayout title={''}>
             <div className={'pb-4'}>
                 <div className={'h-1/3'}>
                     <img
@@ -41,7 +41,7 @@ export default function RecipeComponent({ recipe }: RecipeProps): JSX.Element {
                     </div>
                 </div>
                 <div className={'pt-2 text-3xl font-bold'}>Instructions</div>
-                <div className={'pt-2'}>
+                <div className={'pb-12 pt-2'}>
                     {recipe.instructions?.map((instruction) => (
                         <div key={instruction.id} className={'flex gap-2'}>
                             <div>

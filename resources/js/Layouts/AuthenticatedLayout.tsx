@@ -2,7 +2,14 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
-import { BadgePlus, House, LogOut, ShoppingBasket, User } from 'lucide-react';
+import {
+    ArrowLeft,
+    BadgePlus,
+    House,
+    LogOut,
+    ShoppingBasket,
+    User,
+} from 'lucide-react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
 
 export default function AuthenticatedLayout({
@@ -10,9 +17,8 @@ export default function AuthenticatedLayout({
     children,
 }: PropsWithChildren<{ title?: ReactNode }>) {
     const user = usePage().props.auth.user;
-
+    const currentPage = usePage().url;
     const [showingMobileMenu, setShowingMobileMenu] = useState(false);
-
     return (
         <div className="min-h-screen bg-neutral-light text-neutral-dark dark:bg-neutral-dark dark:text-white">
             <nav className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -110,9 +116,14 @@ export default function AuthenticatedLayout({
                 </div>
             )}
 
-            {title && (
+            {currentPage !== '/home' && (
                 <header className="bg-neutral-light shadow-md dark:bg-gray-800">
-                    <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+                    <div className="mx-auto flex max-w-7xl gap-4 px-2 py-2.5 sm:px-6 lg:px-8">
+                        {window.history.length > 1 && (
+                            <button onClick={() => window.history.back()}>
+                                <ArrowLeft />
+                            </button>
+                        )}
                         {title}
                     </div>
                 </header>

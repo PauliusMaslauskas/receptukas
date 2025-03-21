@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [RecipeController::class, 'index'])->name('recipes.index');
         Route::get('/create', [RecipeController::class, 'create'])->name('recipe.create');
         Route::get('/{id}', [RecipeController::class, 'show'])->name('recipe.show');
-        Route::get('/store', [RecipeController::class, 'store'])->name('recipe.store');
+        Route::post('/store', [RecipeController::class, 'store'])->name('recipe.store');
     });
 
 });

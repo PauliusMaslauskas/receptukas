@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Recipe;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class RecipeController extends Controller
@@ -28,8 +29,10 @@ class RecipeController extends Controller
         return Inertia::render('Recipes/RecipeCreate');
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        dd($request->all());
+
 
     }
 }
