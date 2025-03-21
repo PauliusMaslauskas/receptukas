@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
-class Recipe extends Model
+class RecipeInstruction extends Model
 {
     use HasFactory;
     use SoftDeletes;
@@ -15,13 +15,8 @@ class Recipe extends Model
 
     protected $guarded = ['id'];
 
-    public function products()
+    public function recipe()
     {
-        return $this->hasMany(Product::class);
-    }
-
-    public function instructions()
-    {
-        return $this->hasMany(RecipeInstruction::class);
+        return $this->belongsTo(Recipe::class);
     }
 }

@@ -8,8 +8,8 @@ interface RecipeProps {
 
 export default function RecipeComponent({ recipe }: RecipeProps): JSX.Element {
     return (
-        <AuthenticatedLayout title={recipe.name}>
-            <div>
+        <AuthenticatedLayout title={''}>
+            <div className={'pb-4'}>
                 <div className={'h-1/3'}>
                     <img
                         className={''}
@@ -39,6 +39,18 @@ export default function RecipeComponent({ recipe }: RecipeProps): JSX.Element {
                         <p className="pt-1 text-sm">Prep time</p>
                         <p className="text-lg">{recipe.prep_time} min</p>
                     </div>
+                </div>
+                <div className={'pt-2 text-3xl font-bold'}>Instructions</div>
+                <div className={'pb-12 pt-2'}>
+                    {recipe.instructions?.map((instruction) => (
+                        <div key={instruction.id} className={'flex gap-2'}>
+                            <div>
+                                {instruction.step_number}
+                                {'.'}
+                            </div>
+                            <div>{instruction.instruction}</div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </AuthenticatedLayout>

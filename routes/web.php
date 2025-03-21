@@ -31,7 +31,9 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('recipe')->group(function () {
         Route::get('/', [RecipeController::class, 'index'])->name('recipes.index');
+        Route::get('/create', [RecipeController::class, 'create'])->name('recipe.create');
         Route::get('/{id}', [RecipeController::class, 'show'])->name('recipe.show');
+        Route::post('/store', [RecipeController::class, 'store'])->name('recipe.store');
     });
 
 });
