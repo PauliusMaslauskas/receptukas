@@ -12,7 +12,7 @@ export interface Recipe {
     description: string;
     instructions: string;
     img_path: string;
-    tags: string[];
+    tags: [];
     calories: number;
     time_to_complete: number;
     prep_time: number;
