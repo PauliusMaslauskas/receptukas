@@ -36,7 +36,21 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
                                 {'min'}
                             </div>
                         </div>
-                        <div className="text-sm">{recipe.description}</div>
+                        <div className="line-clamp-3 text-sm">
+                            {recipe.description}
+                        </div>
+                        <div className="flex gap-2 pt-2.5">
+                            {JSON.parse(recipe.tags)
+                                .flat()
+                                .map((tag, index) => (
+                                    <div
+                                        key={index}
+                                        className="flex items-center rounded-full bg-gray-700 px-3 py-1 text-gray-200"
+                                    >
+                                        {tag}
+                                    </div>
+                                ))}
+                        </div>
                     </div>
                 </div>
             </div>

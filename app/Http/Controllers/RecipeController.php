@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRecipeRequest;
 use App\Models\Recipe;
-use Illuminate\Http\Request;
+use App\Services\RecipeService;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
 class RecipeController extends Controller
 {
+
+    public function __construct(public RecipeService $recipeService)
+    {
+
+    }
+
     public function index()
     {
         $recipes = Recipe::all();
@@ -29,10 +37,8 @@ class RecipeController extends Controller
         return Inertia::render('Recipes/RecipeCreate');
     }
 
-    public function store(Request $request)
+    public function store(StoreRecipeRequest $request): RedirectResponse
     {
-        dd($request->all());
-
-
+        return $this->recipeService->createRecipe($request->validated());
     }
 }

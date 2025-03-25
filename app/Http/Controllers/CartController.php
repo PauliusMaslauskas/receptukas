@@ -11,9 +11,8 @@ use Inertia\Inertia;
 
 class CartController extends Controller
 {
-    public function __construct(CartService $cartService)
+    public function __construct(public CartService $cartService)
     {
-        $this->cartService = $cartService;
     }
 
     public function index()

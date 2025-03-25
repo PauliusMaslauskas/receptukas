@@ -1,12 +1,13 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 export default function RecipeCreate() {
     const [values, setValues] = useState({
         name: '',
         description: '',
-        image_path: 'test_path',
+        image_path: null,
         tags: [],
         calories: '',
         time_to_complete: '',
@@ -115,10 +116,14 @@ export default function RecipeCreate() {
     };
 
     const handleSubmit = (e) => {
+        console.log(values);
         e.preventDefault();
         router.post(route('recipe.store'), values, {
             onError: (errors) => {
                 setErrors(errors);
+            },
+            onSuccess: () => {
+                toast('Recipe created');
             },
         });
     };
