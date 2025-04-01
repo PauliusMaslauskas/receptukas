@@ -10,6 +10,7 @@ export interface Recipe {
     author: string;
     name: string;
     description: string;
+    ingredient_groups: string;
     instructions: string;
     img_path: string;
     tags: [];

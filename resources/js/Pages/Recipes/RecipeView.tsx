@@ -7,6 +7,8 @@ interface RecipeProps {
 }
 
 export default function RecipeComponent({ recipe }: RecipeProps): JSX.Element {
+    const parsedIngredientGroups = JSON.parse(recipe.ingredient_groups);
+
     return (
         <AuthenticatedLayout title={''}>
             <div className={'pb-4'}>
@@ -22,6 +24,21 @@ export default function RecipeComponent({ recipe }: RecipeProps): JSX.Element {
                 </div>
                 <div className={'pb-4'}>
                     <p>{recipe.description}</p>
+                </div>
+                <div>
+                    <div className={'text-3xl font-bold'}>Ingredients</div>
+                </div>
+                <div className={'py-4'}>
+                    {parsedIngredientGroups.map((group, index) => (
+                        <div key={index}>
+                            <div className={'text-xl'}>{group.name}:</div>
+                            <ol className="ml-5 list-decimal">
+                                {group.items.map((item, idx) => (
+                                    <li key={idx}>{item}</li>
+                                ))}
+                            </ol>
+                        </div>
+                    ))}
                 </div>
                 <div className="flex items-center justify-center gap-4 py-4">
                     <div className="flex aspect-square w-24 flex-col items-center justify-center text-center dark:bg-gray-800">
