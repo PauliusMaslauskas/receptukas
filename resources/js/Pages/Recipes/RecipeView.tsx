@@ -8,7 +8,6 @@ interface RecipeProps {
 
 export default function RecipeComponent({ recipe }: RecipeProps): JSX.Element {
     const parsedIngredientGroups = JSON.parse(recipe.ingredient_groups);
-
     return (
         <AuthenticatedLayout title={''}>
             <div className={'pb-4'}>
