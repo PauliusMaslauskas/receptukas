@@ -36,7 +36,7 @@ with Laravel, React, and Tailwind CSS, it offers a fast and modern experience.
 
     composer install
     
-    ./vendor/bin/sail up --d
+    ./vendor/bin/sail up -d
     
     ./vendor/bin/sail composer install
     
