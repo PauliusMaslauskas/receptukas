@@ -15,6 +15,10 @@ class Recipe extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'ingredients' => 'array'
+    ];
+
     public function products()
     {
         return $this->hasMany(Product::class);

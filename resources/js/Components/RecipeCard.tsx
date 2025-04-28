@@ -39,9 +39,10 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
                         <div className="line-clamp-3 text-sm">
                             {recipe.description}
                         </div>
-                        <div className="flex gap-2 pt-2.5">
+                        <div className="flex flex-wrap gap-2 pt-2.5">
                             {JSON.parse(recipe.tags)
                                 .flat()
+                                .slice(0, 4)
                                 .map((tag, index) => (
                                     <div
                                         key={index}
@@ -50,6 +51,12 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
                                         {tag}
                                     </div>
                                 ))}
+                            {JSON.parse(recipe.tags).length >= 6 && (
+                                <div className="flex items-center gap-1 rounded-full bg-gray-700 px-3 py-1 text-gray-200">
+                                    {'+'}
+                                    {JSON.parse(recipe.tags).length - 4}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

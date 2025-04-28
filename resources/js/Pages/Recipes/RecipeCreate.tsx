@@ -15,10 +15,20 @@ export default function RecipeCreate() {
         difficulty: '',
         category: '',
         recipe_instructions: [],
+        ingredients: [],
+        ingredient_groups: [
+            {
+                name: '',
+                items: [],
+            },
+        ],
     });
 
     const [tagInput, setTagInput] = useState('');
     const [stepInput, setStepInput] = useState('');
+    const [ingredientInput, setIngredientInput] = useState('');
+    const [newGroupName, setNewGroupName] = useState('');
+    const [activeGroupIndex, setActiveGroupIndex] = useState(0);
     const [errors, setErrors] = useState({});
 
     const difficultyOptions = ['easy', 'medium', 'hard'];
@@ -46,6 +56,10 @@ export default function RecipeCreate() {
 
     const handleStepInput = (e) => {
         setStepInput(e.target.value);
+    };
+
+    const handleIngredientInput = (e) => {
+        setIngredientInput(e.target.value);
     };
 
     const addTag = () => {
@@ -87,6 +101,160 @@ export default function RecipeCreate() {
         }));
     };
 
+    const addIngredientGroup = () => {
+        if (newGroupName.trim() !== '') {
+            setValues((values) => ({
+                ...values,
+                ingredient_groups: [
+                    ...values.ingredient_groups,
+                    {
+                        name: newGroupName.trim(),
+                        items: [],
+                    },
+                ],
+            }));
+            setNewGroupName('');
+            setActiveGroupIndex(values.ingredient_groups.length);
+        }
+    };
+
+    const removeIngredientGroup = (index) => {
+        if (values.ingredient_groups.length <= 1) return;
+
+        setValues((values) => {
+            const newGroups = values.ingredient_groups.filter(
+                (_, i) => i !== index,
+            );
+
+            if (activeGroupIndex === index) {
+                setActiveGroupIndex(0);
+            } else if (activeGroupIndex > index) {
+                setActiveGroupIndex(activeGroupIndex - 1);
+            }
+
+            return {
+                ...values,
+                ingredient_groups: newGroups,
+            };
+        });
+    };
+
+    const renameIngredientGroup = (index, newName) => {
+        if (newName.trim() === '') return;
+
+        setValues((values) => {
+            const newGroups = [...values.ingredient_groups];
+            newGroups[index] = {
+                ...newGroups[index],
+                name: newName.trim(),
+            };
+
+            return {
+                ...values,
+                ingredient_groups: newGroups,
+            };
+        });
+    };
+
+    const addIngredient = () => {
+        if (ingredientInput.trim() !== '') {
+            setValues((values) => {
+                const newGroups = [...values.ingredient_groups];
+                newGroups[activeGroupIndex] = {
+                    ...newGroups[activeGroupIndex],
+                    items: [
+                        ...newGroups[activeGroupIndex].items,
+                        ingredientInput.trim(),
+                    ],
+                };
+
+                return {
+                    ...values,
+                    ingredients: [
+                        ...values.ingredients,
+                        ingredientInput.trim(),
+                    ],
+                    ingredient_groups: newGroups,
+                };
+            });
+            setIngredientInput('');
+        }
+    };
+
+    const removeIngredient = (groupIndex, itemIndex) => {
+        setValues((values) => {
+            const newGroups = [...values.ingredient_groups];
+
+            newGroups[groupIndex] = {
+                ...newGroups[groupIndex],
+                items: newGroups[groupIndex].items.filter(
+                    (_, i) => i !== itemIndex,
+                ),
+            };
+
+            const allIngredients = newGroups.flatMap((group) => group.items);
+
+            return {
+                ...values,
+                ingredients: allIngredients,
+                ingredient_groups: newGroups,
+            };
+        });
+    };
+
+    const moveIngredientUp = (groupIndex, itemIndex) => {
+        if (itemIndex === 0) return;
+
+        setValues((values) => {
+            const newGroups = [...values.ingredient_groups];
+            const groupItems = [...newGroups[groupIndex].items];
+
+            const temp = groupItems[itemIndex];
+            groupItems[itemIndex] = groupItems[itemIndex - 1];
+            groupItems[itemIndex - 1] = temp;
+
+            newGroups[groupIndex] = {
+                ...newGroups[groupIndex],
+                items: groupItems,
+            };
+
+            const allIngredients = newGroups.flatMap((group) => group.items);
+
+            return {
+                ...values,
+                ingredients: allIngredients,
+                ingredient_groups: newGroups,
+            };
+        });
+    };
+
+    const moveIngredientDown = (groupIndex, itemIndex) => {
+        const groupItems = values.ingredient_groups[groupIndex].items;
+        if (itemIndex === groupItems.length - 1) return;
+
+        setValues((values) => {
+            const newGroups = [...values.ingredient_groups];
+            const groupItems = [...newGroups[groupIndex].items];
+
+            const temp = groupItems[itemIndex];
+            groupItems[itemIndex] = groupItems[itemIndex + 1];
+            groupItems[itemIndex + 1] = temp;
+
+            newGroups[groupIndex] = {
+                ...newGroups[groupIndex],
+                items: groupItems,
+            };
+
+            const allIngredients = newGroups.flatMap((group) => group.items);
+
+            return {
+                ...values,
+                ingredients: allIngredients,
+                ingredient_groups: newGroups,
+            };
+        });
+    };
+
     const moveStepUp = (index) => {
         if (index === 0) return;
 
@@ -116,7 +284,6 @@ export default function RecipeCreate() {
     };
 
     const handleSubmit = (e) => {
-        console.log(values);
         e.preventDefault();
         router.post(route('recipe.store'), values, {
             onError: (errors) => {
@@ -203,14 +370,8 @@ export default function RecipeCreate() {
                                         }}
                                         className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
                                     />
-                                    {/*{errors.image_path && (*/}
-                                    {/*    <div className="mt-1 text-sm text-red-500">*/}
-                                    {/*        {errors.image_path}*/}
-                                    {/*    </div>*/}
-                                    {/*)}*/}
                                 </div>
 
-                                {/* Tags */}
                                 <div>
                                     <label className="mb-2 block text-sm font-medium text-gray-300">
                                         Tags
@@ -258,10 +419,232 @@ export default function RecipeCreate() {
                                     )}
                                 </div>
 
-                                {/* recipe_instructions */}
+                                <div>
+                                    <div className="mb-2 flex items-center justify-between">
+                                        <label className="block text-sm font-medium text-gray-300">
+                                            Ingredients
+                                        </label>
+                                        <div className="flex items-center space-x-2">
+                                            <input
+                                                type="text"
+                                                value={newGroupName}
+                                                onChange={(e) =>
+                                                    setNewGroupName(
+                                                        e.target.value,
+                                                    )
+                                                }
+                                                placeholder="New group name"
+                                                className="rounded-md border-gray-600 bg-gray-700 px-2 py-1 text-sm text-white shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={addIngredientGroup}
+                                                className="rounded-md border border-gray-600 px-2 py-1 text-sm text-white hover:bg-green-700"
+                                            >
+                                                Add Group
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div className="mb-4 flex flex-wrap gap-2">
+                                        {values.ingredient_groups.map(
+                                            (group, index) => (
+                                                <button
+                                                    key={index}
+                                                    type="button"
+                                                    onClick={() =>
+                                                        setActiveGroupIndex(
+                                                            index,
+                                                        )
+                                                    }
+                                                    className={`rounded-md px-3 py-1 text-sm ${
+                                                        activeGroupIndex ===
+                                                        index
+                                                            ? 'bg-green-700 text-white'
+                                                            : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                                                    }`}
+                                                >
+                                                    {group.name} (
+                                                    {group.items.length})
+                                                </button>
+                                            ),
+                                        )}
+                                    </div>
+
+                                    <div className="rounded-md border border-gray-700 bg-gray-900 p-3">
+                                        <div className="mb-4 flex items-center justify-between">
+                                            <div className="flex items-center space-x-2">
+                                                <h4 className="font-medium text-gray-300">
+                                                    {
+                                                        values
+                                                            .ingredient_groups[
+                                                            activeGroupIndex
+                                                        ].name
+                                                    }
+                                                </h4>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        const newName = prompt(
+                                                            'Enter new name for this group:',
+                                                            values
+                                                                .ingredient_groups[
+                                                                activeGroupIndex
+                                                            ].name,
+                                                        );
+                                                        if (newName) {
+                                                            renameIngredientGroup(
+                                                                activeGroupIndex,
+                                                                newName,
+                                                            );
+                                                        }
+                                                    }}
+                                                    className="rounded-md border border-gray-600 px-2 py-1 text-xs text-gray-400 hover:text-white"
+                                                >
+                                                    Rename
+                                                </button>
+                                            </div>
+                                            {values.ingredient_groups.length >
+                                                1 && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        removeIngredientGroup(
+                                                            activeGroupIndex,
+                                                        )
+                                                    }
+                                                    className="rounded-md border border-gray-600 px-2 py-1 text-xs text-red-400 hover:text-red-500"
+                                                >
+                                                    Remove Group
+                                                </button>
+                                            )}
+                                        </div>
+
+                                        <div className="flex">
+                                            <textarea
+                                                value={ingredientInput}
+                                                onChange={handleIngredientInput}
+                                                rows="2"
+                                                className="flex-grow rounded-l-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                                                placeholder={`Add an ingredient to "${values.ingredient_groups[activeGroupIndex].name}" (e.g. '2 cups flour')`}
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={addIngredient}
+                                                className="rounded-r-md border border-gray-600 px-4 py-2 text-white hover:bg-green-700"
+                                            >
+                                                Add
+                                            </button>
+                                        </div>
+
+                                        {values.ingredient_groups[
+                                            activeGroupIndex
+                                        ].items.length > 0 && (
+                                            <div className="mt-4">
+                                                <ol className="ml-4 list-decimal space-y-2">
+                                                    {values.ingredient_groups[
+                                                        activeGroupIndex
+                                                    ].items.map(
+                                                        (
+                                                            ingredient,
+                                                            itemIndex,
+                                                        ) => (
+                                                            <li
+                                                                key={itemIndex}
+                                                                className="text-gray-200"
+                                                            >
+                                                                <div className="flex items-start justify-between">
+                                                                    <div className="flex-grow pr-2">
+                                                                        {
+                                                                            ingredient
+                                                                        }
+                                                                    </div>
+                                                                    <div className="flex space-x-2">
+                                                                        <button
+                                                                            type="button"
+                                                                            onClick={() =>
+                                                                                moveIngredientUp(
+                                                                                    activeGroupIndex,
+                                                                                    itemIndex,
+                                                                                )
+                                                                            }
+                                                                            disabled={
+                                                                                itemIndex ===
+                                                                                0
+                                                                            }
+                                                                            className={`px-2 py-1 text-xs text-gray-300 ${
+                                                                                itemIndex ===
+                                                                                0
+                                                                                    ? 'cursor-not-allowed opacity-50'
+                                                                                    : 'hover:text-white'
+                                                                            }`}
+                                                                        >
+                                                                            ↑
+                                                                        </button>
+                                                                        <button
+                                                                            type="button"
+                                                                            onClick={() =>
+                                                                                moveIngredientDown(
+                                                                                    activeGroupIndex,
+                                                                                    itemIndex,
+                                                                                )
+                                                                            }
+                                                                            disabled={
+                                                                                itemIndex ===
+                                                                                values
+                                                                                    .ingredient_groups[
+                                                                                    activeGroupIndex
+                                                                                ]
+                                                                                    .items
+                                                                                    .length -
+                                                                                    1
+                                                                            }
+                                                                            className={`px-2 py-1 text-xs text-gray-300 ${
+                                                                                itemIndex ===
+                                                                                values
+                                                                                    .ingredient_groups[
+                                                                                    activeGroupIndex
+                                                                                ]
+                                                                                    .items
+                                                                                    .length -
+                                                                                    1
+                                                                                    ? 'cursor-not-allowed opacity-50'
+                                                                                    : 'hover:text-white'
+                                                                            }`}
+                                                                        >
+                                                                            ↓
+                                                                        </button>
+                                                                        <button
+                                                                            type="button"
+                                                                            onClick={() =>
+                                                                                removeIngredient(
+                                                                                    activeGroupIndex,
+                                                                                    itemIndex,
+                                                                                )
+                                                                            }
+                                                                            className="px-2 py-1 text-xs text-red-400 hover:text-red-500"
+                                                                        >
+                                                                            ×
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        ),
+                                                    )}
+                                                </ol>
+                                            </div>
+                                        )}
+                                    </div>
+                                    {errors.ingredients && (
+                                        <div className="mt-1 text-sm text-red-500">
+                                            {errors.ingredients}
+                                        </div>
+                                    )}
+                                </div>
+
                                 <div>
                                     <label className="mb-2 block text-sm font-medium text-gray-300">
-                                        Instructions (recipe_instructions)
+                                        Instructions
                                     </label>
                                     <div className="flex">
                                         <textarea
@@ -283,7 +666,7 @@ export default function RecipeCreate() {
                                     {values.recipe_instructions.length > 0 && (
                                         <div className="mt-4 rounded-md border border-gray-700 bg-gray-900 p-2">
                                             <h4 className="mb-2 text-gray-300">
-                                                Recipe recipe_instructions:
+                                                Recipe Instructions:
                                             </h4>
                                             <ol className="ml-4 list-decimal space-y-2">
                                                 {values.recipe_instructions.map(
@@ -369,7 +752,6 @@ export default function RecipeCreate() {
                                     )}
                                 </div>
 
-                                {/* Difficulty */}
                                 <div>
                                     <label
                                         htmlFor="difficulty"
@@ -402,7 +784,6 @@ export default function RecipeCreate() {
                                     )}
                                 </div>
 
-                                {/* Category */}
                                 <div>
                                     <label
                                         htmlFor="category"
