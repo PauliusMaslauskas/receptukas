@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IngredientsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecipeController;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +28,9 @@ Route::middleware('auth')->group(function () {
         Route::delete('remove-item', [CartController::class, 'removeCartItem'])->name('cart.removeCartItem');
     });
 
-    Route::get('products-categories', [ProductController::class, 'getProductsWithCategories'])->name('products.categories');
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/categories', [ProductController::class, 'getProductsWithCategories'])->name('product.categories');
+
 
     Route::prefix('recipe')->group(function () {
         Route::get('/', [RecipeController::class, 'index'])->name('recipes.index');
@@ -38,4 +41,4 @@ Route::middleware('auth')->group(function () {
 
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

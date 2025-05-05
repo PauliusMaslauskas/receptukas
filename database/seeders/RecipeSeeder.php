@@ -22,19 +22,19 @@ class RecipeSeeder extends Seeder
                 [
                     "name" => "For the soup",
                     "items" => [
-                        "200 g | 7 oz boiled & cooled beetroot",
-                        "100 g | 3.5 oz cucumber",
-                        "2 hard-boiled eggs",
-                        "1.5 litres | 3 pints kefir",
-                        "Bunch fresh dill",
-                        "Juice of ½ a lemon (optional)",
-                        "Salt to taste",
+                        "Beetroot: 200 g | 7 oz boiled & cooled beetroot",
+                        "Cucumber: 100 g | 3.5 oz cucumber",
+                        "Eggs: 2 hard-boiled eggs",
+                        "Kefir: 1.5 litres | 3 pints kefir",
+                        "Dill: Bunch fresh dill",
+                        "Lemon: Juice of ½ a lemon (optional)",
+                        "Salt: to taste",
                     ],
                 ],
                 [
                     "name" => "For the side dish",
                     "items" => [
-                        "200 g | 7 oz potatoes",
+                        "Potato: 200 g | 7 oz",
                     ],
                 ]
             ]),
