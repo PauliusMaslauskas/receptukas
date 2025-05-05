@@ -20,7 +20,14 @@ class DatabaseSeeder extends Seeder
             'password' => 'secret',
         ]);
 
+        User::factory()->create([
+            'name' => 'Admin Example',
+            'email' => 'admin@example.com',
+            'password' => 'secret',
+        ]);
+
         $this->call([
+            ProductSeeder::class,
             RecipeSeeder::class
         ]);
     }

@@ -1,5 +1,4 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
-import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
 import {
@@ -29,32 +28,32 @@ export default function AuthenticatedLayout({
                         </Link>
                     </div>
 
-                    <div className="hidden items-center space-x-4 sm:flex">
-                        <NavLink
-                            href={route('home')}
-                            active={route().current('home')}
-                        >
-                            Home
-                        </NavLink>
-                        <NavLink
-                            href={route('carts.index')}
-                            active={route().current('dashboard')}
-                        >
-                            My carts
-                        </NavLink>
-                        <NavLink
-                            href={route('profile.edit')}
-                            active={route().current('profile.edit')}
-                        >
-                            Profile
-                        </NavLink>
-                        <button
-                            onClick={() => handleLogout()}
-                            className="rounded-lg bg-warm-red px-3 py-2 font-semibold text-white hover:bg-red-600"
-                        >
-                            Log Out
-                        </button>
-                    </div>
+                    {/*<div className="hidden items-center space-x-4 sm:flex">*/}
+                    {/*    <NavLink*/}
+                    {/*        href={route('home')}*/}
+                    {/*        active={route().current('home')}*/}
+                    {/*    >*/}
+                    {/*        Home*/}
+                    {/*    </NavLink>*/}
+                    {/*    <NavLink*/}
+                    {/*        href={route('carts.index')}*/}
+                    {/*        active={route().current('dashboard')}*/}
+                    {/*    >*/}
+                    {/*        My carts*/}
+                    {/*    </NavLink>*/}
+                    {/*    <NavLink*/}
+                    {/*        href={route('profile.edit')}*/}
+                    {/*        active={route().current('profile.edit')}*/}
+                    {/*    >*/}
+                    {/*        Profile*/}
+                    {/*    </NavLink>*/}
+                    {/*    <button*/}
+                    {/*        onClick={() => handleLogout()}*/}
+                    {/*        className="rounded-lg bg-warm-red px-3 py-2 font-semibold text-white hover:bg-red-600"*/}
+                    {/*    >*/}
+                    {/*        Log Out*/}
+                    {/*    </button>*/}
+                    {/*</div>*/}
                     <button
                         onClick={() => setShowingMobileMenu(!showingMobileMenu)}
                         className="rounded-lg p-2 text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-green focus:ring-offset-2 sm:hidden"
@@ -133,7 +132,7 @@ export default function AuthenticatedLayout({
                 {children}
             </main>
 
-            <nav className="fixed bottom-0 left-0 right-0 flex justify-around bg-neutral-light py-2 shadow-md sm:hidden dark:bg-gray-800">
+            <nav className="fixed bottom-0 left-0 right-0 flex justify-center gap-10 bg-neutral-light py-2 shadow-md sm:gap-28 dark:bg-gray-800">
                 <NavItem href={route('home')} icon={<House />} label="Home" />
                 <NavItem
                     href={route('profile.edit')}

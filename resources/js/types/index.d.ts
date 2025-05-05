@@ -17,6 +17,12 @@ export interface Recipe {
     calories: number;
     time_to_complete: number;
     prep_time: number;
+    image_path: string;
+}
+
+export interface Product {
+    id: number;
+    name: string;
 }
 
 export type PageProps<

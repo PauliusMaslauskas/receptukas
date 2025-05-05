@@ -1,4 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import ProductSelect from '@/Pages/Recipes/Components/ProductSelect';
 import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -154,31 +155,6 @@ export default function RecipeCreate() {
                 ingredient_groups: newGroups,
             };
         });
-    };
-
-    const addIngredient = () => {
-        if (ingredientInput.trim() !== '') {
-            setValues((values) => {
-                const newGroups = [...values.ingredient_groups];
-                newGroups[activeGroupIndex] = {
-                    ...newGroups[activeGroupIndex],
-                    items: [
-                        ...newGroups[activeGroupIndex].items,
-                        ingredientInput.trim(),
-                    ],
-                };
-
-                return {
-                    ...values,
-                    ingredients: [
-                        ...values.ingredients,
-                        ingredientInput.trim(),
-                    ],
-                    ingredient_groups: newGroups,
-                };
-            });
-            setIngredientInput('');
-        }
     };
 
     const removeIngredient = (groupIndex, itemIndex) => {
@@ -520,21 +496,23 @@ export default function RecipeCreate() {
                                             )}
                                         </div>
 
-                                        <div className="flex">
-                                            <textarea
-                                                value={ingredientInput}
-                                                onChange={handleIngredientInput}
-                                                rows="2"
-                                                className="flex-grow rounded-l-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
-                                                placeholder={`Add an ingredient to "${values.ingredient_groups[activeGroupIndex].name}" (e.g. '2 cups flour')`}
+                                        <div className="mb-4">
+                                            <ProductSelect
+                                                onAddIngredient={(
+                                                    ingredient,
+                                                ) => {
+                                                    const newValues = {
+                                                        ...values,
+                                                    };
+                                                    newValues.ingredient_groups[
+                                                        activeGroupIndex
+                                                    ].items.push(
+                                                        ingredient.trim(),
+                                                    );
+
+                                                    setValues(newValues);
+                                                }}
                                             />
-                                            <button
-                                                type="button"
-                                                onClick={addIngredient}
-                                                className="rounded-r-md border border-gray-600 px-4 py-2 text-white hover:bg-green-700"
-                                            >
-                                                Add
-                                            </button>
                                         </div>
 
                                         {values.ingredient_groups[
@@ -640,254 +618,261 @@ export default function RecipeCreate() {
                                             {errors.ingredients}
                                         </div>
                                     )}
-                                </div>
 
-                                <div>
-                                    <label className="mb-2 block text-sm font-medium text-gray-300">
-                                        Instructions
-                                    </label>
-                                    <div className="flex">
-                                        <textarea
-                                            value={stepInput}
-                                            onChange={handleStepInput}
-                                            rows="2"
-                                            className="flex-grow rounded-l-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
-                                            placeholder="Add a cooking instruction step"
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={addStep}
-                                            className="rounded-r-md border border-gray-600 px-4 py-2 text-white hover:bg-green-700"
+                                    <div>
+                                        <label className="mb-2 block text-sm font-medium text-gray-300">
+                                            Instructions
+                                        </label>
+                                        <div className="flex">
+                                            <textarea
+                                                value={stepInput}
+                                                onChange={handleStepInput}
+                                                rows="2"
+                                                className="flex-grow rounded-l-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                                                placeholder="Add a cooking instruction step"
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={addStep}
+                                                className="rounded-r-md border border-gray-600 px-4 py-2 text-white hover:bg-green-700"
+                                            >
+                                                Add
+                                            </button>
+                                        </div>
+
+                                        {values.recipe_instructions.length >
+                                            0 && (
+                                            <div className="mt-4 rounded-md border border-gray-700 bg-gray-900 p-2">
+                                                <h4 className="mb-2 text-gray-300">
+                                                    Recipe Instructions:
+                                                </h4>
+                                                <ol className="ml-4 list-decimal space-y-2">
+                                                    {values.recipe_instructions.map(
+                                                        (step, index) => (
+                                                            <li
+                                                                key={index}
+                                                                className="text-gray-200"
+                                                            >
+                                                                <div className="flex items-start justify-between">
+                                                                    <div className="flex-grow pr-2">
+                                                                        {step}
+                                                                    </div>
+                                                                    <div className="flex space-x-2">
+                                                                        <button
+                                                                            type="button"
+                                                                            onClick={() =>
+                                                                                moveStepUp(
+                                                                                    index,
+                                                                                )
+                                                                            }
+                                                                            disabled={
+                                                                                index ===
+                                                                                0
+                                                                            }
+                                                                            className={`px-2 py-1 text-xs text-gray-300 ${
+                                                                                index ===
+                                                                                0
+                                                                                    ? 'cursor-not-allowed opacity-50'
+                                                                                    : 'hover:text-white'
+                                                                            }`}
+                                                                        >
+                                                                            ↑
+                                                                        </button>
+                                                                        <button
+                                                                            type="button"
+                                                                            onClick={() =>
+                                                                                moveStepDown(
+                                                                                    index,
+                                                                                )
+                                                                            }
+                                                                            disabled={
+                                                                                index ===
+                                                                                values
+                                                                                    .recipe_instructions
+                                                                                    .length -
+                                                                                    1
+                                                                            }
+                                                                            className={`px-2 py-1 text-xs text-gray-300 ${
+                                                                                index ===
+                                                                                values
+                                                                                    .recipe_instructions
+                                                                                    .length -
+                                                                                    1
+                                                                                    ? 'cursor-not-allowed opacity-50'
+                                                                                    : 'hover:text-white'
+                                                                            }`}
+                                                                        >
+                                                                            ↓
+                                                                        </button>
+                                                                        <button
+                                                                            type="button"
+                                                                            onClick={() =>
+                                                                                removeStep(
+                                                                                    index,
+                                                                                )
+                                                                            }
+                                                                            className="px-2 py-1 text-xs text-red-400 hover:text-red-500"
+                                                                        >
+                                                                            ×
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        ),
+                                                    )}
+                                                </ol>
+                                            </div>
+                                        )}
+                                        {errors.recipe_instructions && (
+                                            <div className="mt-1 text-sm text-red-500">
+                                                {errors.recipe_instructions}
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div>
+                                        <label
+                                            htmlFor="difficulty"
+                                            className="block text-sm font-medium text-gray-300"
                                         >
-                                            Add
+                                            Difficulty
+                                        </label>
+                                        <select
+                                            id="difficulty"
+                                            value={values.difficulty}
+                                            onChange={handleChange}
+                                            className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                                        >
+                                            <option value="">
+                                                Select difficulty
+                                            </option>
+                                            {difficultyOptions.map((option) => (
+                                                <option
+                                                    key={option}
+                                                    value={option}
+                                                >
+                                                    {option
+                                                        .charAt(0)
+                                                        .toUpperCase() +
+                                                        option.slice(1)}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        {errors.difficulty && (
+                                            <div className="mt-1 text-sm text-red-500">
+                                                {errors.difficulty}
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div>
+                                        <label
+                                            htmlFor="category"
+                                            className="block text-sm font-medium text-gray-300"
+                                        >
+                                            Category
+                                        </label>
+                                        <select
+                                            id="category"
+                                            value={values.category}
+                                            onChange={handleChange}
+                                            className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                                        >
+                                            <option value="">
+                                                Select category
+                                            </option>
+                                            {categoryOptions.map((option) => (
+                                                <option
+                                                    key={option}
+                                                    value={option}
+                                                >
+                                                    {option
+                                                        .charAt(0)
+                                                        .toUpperCase() +
+                                                        option.slice(1)}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        {errors.category && (
+                                            <div className="mt-1 text-sm text-red-500">
+                                                {errors.category}
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div>
+                                        <label
+                                            htmlFor="calories"
+                                            className="block text-sm font-medium text-gray-300"
+                                        >
+                                            Calories
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="calories"
+                                            value={values.calories}
+                                            onChange={handleChange}
+                                            className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                                        />
+                                        {errors.calories && (
+                                            <div className="mt-1 text-sm text-red-500">
+                                                {errors.calories}
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div className={'flex-col-2 flex gap-4'}>
+                                        <div>
+                                            <label
+                                                htmlFor="prep_time"
+                                                className="block text-sm font-medium text-gray-300"
+                                            >
+                                                Prep Time (min)
+                                            </label>
+                                            <input
+                                                type="number"
+                                                id="prep_time"
+                                                value={values.prep_time}
+                                                onChange={handleChange}
+                                                className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                                            />
+                                            {errors.prep_time && (
+                                                <div className="mt-1 text-sm text-red-500">
+                                                    {errors.prep_time}
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        <div>
+                                            <label
+                                                htmlFor="time_to_complete"
+                                                className="block text-sm font-medium text-gray-300"
+                                            >
+                                                Total Time (min)
+                                            </label>
+                                            <input
+                                                type="number"
+                                                id="time_to_complete"
+                                                value={values.time_to_complete}
+                                                onChange={handleChange}
+                                                className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                                            />
+                                            {errors.time_to_complete && (
+                                                <div className="mt-1 text-sm text-red-500">
+                                                    {errors.time_to_complete}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center justify-end">
+                                        <button
+                                            type="submit"
+                                            className="rounded-md border border-gray-600 px-4 py-2 text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                                        >
+                                            Create Recipe
                                         </button>
                                     </div>
-
-                                    {values.recipe_instructions.length > 0 && (
-                                        <div className="mt-4 rounded-md border border-gray-700 bg-gray-900 p-2">
-                                            <h4 className="mb-2 text-gray-300">
-                                                Recipe Instructions:
-                                            </h4>
-                                            <ol className="ml-4 list-decimal space-y-2">
-                                                {values.recipe_instructions.map(
-                                                    (step, index) => (
-                                                        <li
-                                                            key={index}
-                                                            className="text-gray-200"
-                                                        >
-                                                            <div className="flex items-start justify-between">
-                                                                <div className="flex-grow pr-2">
-                                                                    {step}
-                                                                </div>
-                                                                <div className="flex space-x-2">
-                                                                    <button
-                                                                        type="button"
-                                                                        onClick={() =>
-                                                                            moveStepUp(
-                                                                                index,
-                                                                            )
-                                                                        }
-                                                                        disabled={
-                                                                            index ===
-                                                                            0
-                                                                        }
-                                                                        className={`px-2 py-1 text-xs text-gray-300 ${
-                                                                            index ===
-                                                                            0
-                                                                                ? 'cursor-not-allowed opacity-50'
-                                                                                : 'hover:text-white'
-                                                                        }`}
-                                                                    >
-                                                                        ↑
-                                                                    </button>
-                                                                    <button
-                                                                        type="button"
-                                                                        onClick={() =>
-                                                                            moveStepDown(
-                                                                                index,
-                                                                            )
-                                                                        }
-                                                                        disabled={
-                                                                            index ===
-                                                                            values
-                                                                                .recipe_instructions
-                                                                                .length -
-                                                                                1
-                                                                        }
-                                                                        className={`px-2 py-1 text-xs text-gray-300 ${
-                                                                            index ===
-                                                                            values
-                                                                                .recipe_instructions
-                                                                                .length -
-                                                                                1
-                                                                                ? 'cursor-not-allowed opacity-50'
-                                                                                : 'hover:text-white'
-                                                                        }`}
-                                                                    >
-                                                                        ↓
-                                                                    </button>
-                                                                    <button
-                                                                        type="button"
-                                                                        onClick={() =>
-                                                                            removeStep(
-                                                                                index,
-                                                                            )
-                                                                        }
-                                                                        className="px-2 py-1 text-xs text-red-400 hover:text-red-500"
-                                                                    >
-                                                                        ×
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    ),
-                                                )}
-                                            </ol>
-                                        </div>
-                                    )}
-                                    {errors.recipe_instructions && (
-                                        <div className="mt-1 text-sm text-red-500">
-                                            {errors.recipe_instructions}
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div>
-                                    <label
-                                        htmlFor="difficulty"
-                                        className="block text-sm font-medium text-gray-300"
-                                    >
-                                        Difficulty
-                                    </label>
-                                    <select
-                                        id="difficulty"
-                                        value={values.difficulty}
-                                        onChange={handleChange}
-                                        className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
-                                    >
-                                        <option value="">
-                                            Select difficulty
-                                        </option>
-                                        {difficultyOptions.map((option) => (
-                                            <option key={option} value={option}>
-                                                {option
-                                                    .charAt(0)
-                                                    .toUpperCase() +
-                                                    option.slice(1)}
-                                            </option>
-                                        ))}
-                                    </select>
-                                    {errors.difficulty && (
-                                        <div className="mt-1 text-sm text-red-500">
-                                            {errors.difficulty}
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div>
-                                    <label
-                                        htmlFor="category"
-                                        className="block text-sm font-medium text-gray-300"
-                                    >
-                                        Category
-                                    </label>
-                                    <select
-                                        id="category"
-                                        value={values.category}
-                                        onChange={handleChange}
-                                        className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
-                                    >
-                                        <option value="">
-                                            Select category
-                                        </option>
-                                        {categoryOptions.map((option) => (
-                                            <option key={option} value={option}>
-                                                {option
-                                                    .charAt(0)
-                                                    .toUpperCase() +
-                                                    option.slice(1)}
-                                            </option>
-                                        ))}
-                                    </select>
-                                    {errors.category && (
-                                        <div className="mt-1 text-sm text-red-500">
-                                            {errors.category}
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div>
-                                    <label
-                                        htmlFor="calories"
-                                        className="block text-sm font-medium text-gray-300"
-                                    >
-                                        Calories
-                                    </label>
-                                    <input
-                                        type="number"
-                                        id="calories"
-                                        value={values.calories}
-                                        onChange={handleChange}
-                                        className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
-                                    />
-                                    {errors.calories && (
-                                        <div className="mt-1 text-sm text-red-500">
-                                            {errors.calories}
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div className={'flex-col-2 flex gap-4'}>
-                                    <div>
-                                        <label
-                                            htmlFor="prep_time"
-                                            className="block text-sm font-medium text-gray-300"
-                                        >
-                                            Prep Time (min)
-                                        </label>
-                                        <input
-                                            type="number"
-                                            id="prep_time"
-                                            value={values.prep_time}
-                                            onChange={handleChange}
-                                            className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
-                                        />
-                                        {errors.prep_time && (
-                                            <div className="mt-1 text-sm text-red-500">
-                                                {errors.prep_time}
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    <div>
-                                        <label
-                                            htmlFor="time_to_complete"
-                                            className="block text-sm font-medium text-gray-300"
-                                        >
-                                            Total Time (min)
-                                        </label>
-                                        <input
-                                            type="number"
-                                            id="time_to_complete"
-                                            value={values.time_to_complete}
-                                            onChange={handleChange}
-                                            className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
-                                        />
-                                        {errors.time_to_complete && (
-                                            <div className="mt-1 text-sm text-red-500">
-                                                {errors.time_to_complete}
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-
-                                <div className="flex items-center justify-end">
-                                    <button
-                                        type="submit"
-                                        className="rounded-md border border-gray-600 px-4 py-2 text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-                                    >
-                                        Create Recipe
-                                    </button>
                                 </div>
                             </div>
                         </form>
