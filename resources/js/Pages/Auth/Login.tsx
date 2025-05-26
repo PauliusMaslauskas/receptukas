@@ -29,7 +29,7 @@ export default function Login({
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout title={'Receptukas'}>
             <Head title="Log in" />
 
             {status && (
@@ -38,8 +38,15 @@ export default function Login({
                 </div>
             )}
 
-            <div className="flex min-h-screen items-center justify-center px-4">
+            <div className="flex flex-col items-center justify-center px-4">
                 <form onSubmit={submit} className="mx-auto w-full max-w-sm">
+                    <div
+                        className={
+                            'self-start pb-12 text-5xl font-bold text-white'
+                        }
+                    >
+                        Log in
+                    </div>
                     <div>
                         <InputLabel htmlFor="email" value="Email" />
 
@@ -106,6 +113,24 @@ export default function Login({
                         <PrimaryButton className="ms-4" disabled={processing}>
                             Log in
                         </PrimaryButton>
+                    </div>
+                    <div className={'bottom-1 my-4 border border-gray-600'} />
+                    <div>
+                        <div className={'justify-items-center'}>
+                            <div
+                                className={
+                                    'text-md ms-2 text-gray-600 dark:text-gray-400'
+                                }
+                            >
+                                Or
+                            </div>
+                            <Link
+                                href={route('register')}
+                                className="text-md rounded-md text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
+                            >
+                                Sign up
+                            </Link>
+                        </div>
                     </div>
                 </form>
             </div>

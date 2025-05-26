@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Recipe;
 use App\Models\RecipeInstruction;
+use App\Models\RecipeItem;
 use Illuminate\Database\Seeder;
 
 class RecipeSeeder extends Seeder
@@ -46,6 +47,53 @@ class RecipeSeeder extends Seeder
             'category' => 'lunch',
             'difficulty' => 'easy',
         ]);
+
+        $recipeItems = [
+            'Beetroot' => [
+                'id' => 35,
+                'quantity' => 1,
+                'quantity_by_weight' => 200,
+            ],
+            'Cucumber' => [
+                'id' => 30,
+                'quantity' => 1,
+                'quantity_by_weight' => 100,
+            ],
+            'Eggs' => [
+                'id' => 53,
+                'quantity' => 2,
+                'quantity_by_weight' => 0,
+            ],
+            'Kefir' => [
+                'id' => 42,
+                'quantity' => 2,
+                'quantity_by_weight' => 1500,
+            ],
+            'Dill' => [
+                'id' => 36,
+                'quantity' => 1,
+                'quantity_by_weight' => 0,
+            ],
+            'Lemon' => [
+                'id' => 36,
+                'quantity' => 2,
+                'quantity_by_weight' => 0,
+            ],
+            'Salt' => [
+                'id' => 1,
+                'quantity' => 1,
+                'quantity_by_weight' => 0,
+            ],
+        ];
+
+        foreach ($recipeItems as $item) {
+            RecipeItem::create([
+                'recipe_id' => $recipe->id,
+                'product_id' => $item['id'],
+                'quantity' => $item['quantity'],
+                'quantity_by_weight' => $item['quantity_by_weight'],
+            ]);
+        }
 
         $recipeInstructions = [
             'Peel the potatoes and chop into bite-sized pieces. Place in a saucepan of boiling water, add a good pinch of salt and boil until a knife can easily pierce the flesh.',

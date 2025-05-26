@@ -21,12 +21,12 @@ export default function Welcome({
     return (
         <Layout isAuthenticated={isAuthenticated}>
             {!isAuthenticated && (
-                <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
+                <div className="mx-auto w-full max-w-sm rounded-lg bg-white p-6 shadow dark:bg-gray-800">
                     <p className="mt-2 text-gray-600 dark:text-gray-300">
                         Log in or register to start saving your favorite
                         recipes.
                     </p>
-                    <div className="mx-auto mt-4 max-w-xs space-y-4">
+                    <div className="mx-auto mt-4 max-w-xs space-y-4 pt-4">
                         <ButtonLink href={route('login')} text="Log in" />
                         <ButtonLink href={route('register')} text="Register" />
                     </div>
@@ -51,16 +51,16 @@ export default function Welcome({
                     </>
                 )}
 
-                <div className="mt-6 grid grid-cols-1 gap-6 pb-12 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="mx-auto mt-6 grid w-full max-w-sm grid-cols-1 gap-4">
                     <DashboardCard
                         title="Recipes Available"
                         value={recipes.length}
-                        icon={<CookingPot size={36} />}
+                        icon={<CookingPot size={32} />}
                     />
                     <DashboardCard
                         title="Users on Platform"
                         value={usersCount}
-                        icon={<Users size={36} />}
+                        icon={<Users size={32} />}
                     />
                 </div>
             </div>
@@ -76,11 +76,9 @@ function Layout({
     children: React.ReactNode;
 }) {
     return isAuthenticated ? (
-        <AuthenticatedLayout title="Welcome to Receptukas!">
-            {children}
-        </AuthenticatedLayout>
+        <AuthenticatedLayout>{children}</AuthenticatedLayout>
     ) : (
-        <GuestLayout title="Welcome to Receptukas!">{children}</GuestLayout>
+        <GuestLayout>{children}</GuestLayout>
     );
 }
 
@@ -95,7 +93,7 @@ function DashboardCard({
 }) {
     return (
         <div className="flex items-center rounded-lg bg-white p-4 shadow dark:bg-gray-800">
-            <span className="text-3xl">{icon}</span>
+            <span className="text-3xl text-white">{icon}</span>
             <div className="ml-4">
                 <h4 className="text-sm font-medium text-gray-700 dark:text-gray-200">
                     {title}
@@ -112,7 +110,7 @@ function ButtonLink({ href, text }: { href: string; text: string }) {
     return (
         <Link
             href={href}
-            className="block w-full rounded-lg bg-primary-green py-3 text-center font-semibold text-white shadow-md hover:bg-primary-green/90 dark:bg-accent-yellow dark:text-black dark:hover:bg-accent-yellow/80"
+            className="dark:bg-primary-gray block w-full rounded-lg py-3 text-center font-semibold text-white shadow-md hover:bg-primary-green/90 dark:text-black dark:hover:bg-white"
         >
             {text}
         </Link>
