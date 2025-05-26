@@ -17,6 +17,7 @@ export default {
             },
             colors: {
                 'primary-green': '#6AB547',
+                'primary-gray': '#e5e7eb',
                 'accent-yellow': '#FFC107',
                 'warm-red': '#E63946',
                 'neutral-light': '#F8F9FA',

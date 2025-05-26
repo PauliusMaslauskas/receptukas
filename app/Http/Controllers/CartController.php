@@ -35,11 +35,12 @@ class CartController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
+            'recipe_id' => 'optional|int'
         ]);
 
         $user = auth()->user();
 
-        $this->cartService->createCart($user->id, $request->name);
+        $this->cartService->createCart($user->id, $request->name, $request->recipe_id);
     }
 
     public function destroy(Request $request): void

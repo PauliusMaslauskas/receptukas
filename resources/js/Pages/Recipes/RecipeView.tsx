@@ -1,6 +1,9 @@
+import PrimaryButton from '@/Components/PrimaryButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Recipe } from '@/types';
+import { router } from '@inertiajs/react';
 import { Flame, Timer } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 interface RecipeProps {
     recipe: Recipe;
@@ -8,6 +11,23 @@ interface RecipeProps {
 
 export default function RecipeComponent({ recipe }: RecipeProps): JSX.Element {
     const parsedIngredientGroups = JSON.parse(recipe.ingredient_groups);
+
+    const addRecipeItemsToCart = (e) => {
+        e.preventDefault();
+        router.post(
+            route('cart.store'),
+            {
+                name: recipe.name,
+                recipe_id: recipe.id,
+            },
+            {
+                onSuccess: () => {
+                    toast('Recipe cart created');
+                },
+            },
+        );
+    };
+
     return (
         <AuthenticatedLayout title={''}>
             <div className={'pb-4'}>
@@ -18,8 +38,13 @@ export default function RecipeComponent({ recipe }: RecipeProps): JSX.Element {
                         src={recipe.image_path}
                     />
                 </div>
-                <div className={'py-4'}>
+                <div className={'flex justify-between py-4'}>
                     <div className={'text-3xl font-bold'}>{recipe.name}</div>
+                    <div>
+                        <PrimaryButton onClick={(e) => addRecipeItemsToCart(e)}>
+                            Add items to cart
+                        </PrimaryButton>
+                    </div>
                 </div>
                 <div className={'pb-4'}>
                     <p>{recipe.description}</p>
