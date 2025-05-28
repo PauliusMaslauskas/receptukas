@@ -32,22 +32,8 @@ class Product extends Authenticatable
     protected function cast(): array
     {
         return [
-            'price' => 'decimal:2',
+            'price' => 'integer',
             'quantity' => 'integer',
-        ];
-    }
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'price' => 'decimal:2',
-            'quantity' => 'integer',
-            'is_purchased' => 'boolean',
         ];
     }
 
