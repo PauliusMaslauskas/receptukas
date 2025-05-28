@@ -3,7 +3,7 @@ import CreateCartModal from '@/Components/Modals/CreateCartModal';
 import PrimaryButton from '@/Components/PrimaryButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { router } from '@inertiajs/react';
-import { Trash2 } from 'lucide-react';
+import { ShoppingBasket, Trash } from 'lucide-react';
 import React from 'react';
 
 interface CartItem {
@@ -39,7 +39,7 @@ export default function CartList({ carts }: CartListProps) {
                             key={cart.id}
                             title={cart.name}
                             value={`${cart.items.length} items`}
-                            icon={<span className="text-4xl">🛒</span>}
+                            icon={<ShoppingBasket size={46} />}
                             onClick={() => openCart(cart.id)}
                             action={
                                 <button
@@ -47,9 +47,9 @@ export default function CartList({ carts }: CartListProps) {
                                         e.stopPropagation();
                                         handleRemove(cart.id);
                                     }}
-                                    className="relative z-10 rounded-full p-2 hover:bg-red-100"
+                                    className="relative z-10 rounded-full p-2 text-red-500 hover:text-white"
                                 >
-                                    <Trash2 size={20} color="red" />
+                                    <Trash />
                                 </button>
                             }
                         />

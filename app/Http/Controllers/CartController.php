@@ -26,16 +26,18 @@ class CartController extends Controller
 
     public function show($id)
     {
-        $cart = Cart::with('items')->findOrFail($id);
+        $cart = Cart::with('items.product')->findOrFail($id);
 
-        return Inertia::render('Carts/CartView', ['cart' => $cart]);
+        return Inertia::render('Carts/CartView', [
+            'cart' => $cart,
+        ]);
     }
 
     public function store(Request $request): void
     {
         $request->validate([
             'name' => 'required|string',
-            'recipe_id' => 'optional|int'
+            'recipe_id' => 'nullable|int'
         ]);
 
         $user = auth()->user();
@@ -63,6 +65,6 @@ class CartController extends Controller
         ]);
         $this->cartService->removeCartItem($request->cart_id, $request->cart_item_id);
 
-        return redirect()->route('cart.index')->with('success', 'CartView item removed successfully');
+        return redirect()->route('cart.show', $request->input('cart_id'));
     }
 }

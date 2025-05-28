@@ -12,17 +12,28 @@ class CartService
     public function createCart($userId, string $name, int $recipeId = null): RedirectResponse
     {
 
-        Cart::create([
+        $cart = Cart::create([
             'user_id' => $userId,
             'name' => $name,
         ]);
 
         if ($recipeId) {
-            $recipe = Recipe::findorfail($recipeId);
+            $recipe = Recipe::findOrFail($recipeId);
 
+            foreach ($recipe->recipeItem as $item) {
+                $this->addCartItem($cart, $item);
+            }
         }
-
         return redirect('/cart');
+    }
+
+    public function addCartItem(Cart $cart, $item)
+    {
+        return $cart->items()->create([
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+            ]
+        );
     }
 
     public function destroyCart($userId, $cartId): RedirectResponse
@@ -36,6 +47,7 @@ class CartService
 
         return redirect('/cart');
     }
+
 
     public function removeCartItem($cartId, $cartItemId)
     {

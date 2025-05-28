@@ -28,4 +28,9 @@ class Recipe extends Model
     {
         return $this->hasMany(RecipeInstruction::class);
     }
+
+    public function recipeItem()
+    {
+        return $this->hasMany(RecipeItem::class);
+    }
 }
