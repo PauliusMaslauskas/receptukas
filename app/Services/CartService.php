@@ -21,17 +21,28 @@ class CartService
             $recipe = Recipe::findOrFail($recipeId);
 
             foreach ($recipe->recipeItem as $item) {
-                $this->addCartItem($cart, $item);
+                $this->addCartItem($cart,
+                    [
+                        'product_id' => $item->product_id,
+                        'quantity' => $item->quantity
+                    ]);
             }
         }
         return redirect('/cart');
     }
 
-    public function addCartItem(Cart $cart, $item)
+    public function addOrUpdateCartItem(Cart $cart, array $item)
     {
+        $itemInCart = $cart->items()->where('product_id', $item['product_id'])->first();
+
+        if ($itemInCart) {
+            $itemInCart->increment('quantity', $item['quantity']);
+            return $itemInCart;
+        }
+
         return $cart->items()->create([
-                'product_id' => $item->product_id,
-                'quantity' => $item->quantity,
+                'product_id' => $item['product_id'],
+                'quantity' => $item['quantity']
             ]
         );
     }
@@ -59,4 +70,6 @@ class CartService
             $cartItem->delete();
         }
     }
+
+
 }

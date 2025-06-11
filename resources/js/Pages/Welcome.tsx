@@ -21,7 +21,7 @@ export default function Welcome({
     return (
         <Layout isAuthenticated={isAuthenticated}>
             {!isAuthenticated && (
-                <div className="mx-auto w-full max-w-sm rounded-lg bg-white p-6 shadow dark:bg-gray-800">
+                <div className="dark:bg-yellow-primary mx-auto w-full max-w-sm rounded-lg bg-white p-6 shadow">
                     <p className="mt-2 text-gray-600 dark:text-gray-300">
                         Log in or register to start saving your favorite
                         recipes.
@@ -37,9 +37,17 @@ export default function Welcome({
                 {isAuthenticated && (
                     <>
                         <SearchSection />
-                        <div className={'pb-4 text-2xl font-bold'}>
-                            {recipes.length}
-                            {' Recipes'}
+                        <div className="mb-6 flex gap-4">
+                            <DashboardCard
+                                title=""
+                                value={recipes.length}
+                                icon={<CookingPot size={28} />}
+                            />
+                            <DashboardCard
+                                title=""
+                                value={usersCount}
+                                icon={<Users size={28} />}
+                            />
                         </div>
 
                         {recipes &&
@@ -50,19 +58,6 @@ export default function Welcome({
                             ))}
                     </>
                 )}
-
-                <div className="mx-auto mt-6 grid w-full max-w-sm grid-cols-1 gap-4">
-                    <DashboardCard
-                        title="Recipes Available"
-                        value={recipes.length}
-                        icon={<CookingPot size={32} />}
-                    />
-                    <DashboardCard
-                        title="Users on Platform"
-                        value={usersCount}
-                        icon={<Users size={32} />}
-                    />
-                </div>
             </div>
         </Layout>
     );
@@ -92,16 +87,14 @@ function DashboardCard({
     icon: string;
 }) {
     return (
-        <div className="flex items-center rounded-lg bg-white p-4 shadow dark:bg-gray-800">
-            <span className="text-3xl text-white">{icon}</span>
-            <div className="ml-4">
-                <h4 className="text-sm font-medium text-gray-700 dark:text-gray-200">
-                    {title}
-                </h4>
-                <p className="text-2xl font-semibold text-gray-900 dark:text-white">
-                    {value}
-                </p>
-            </div>
+        <div className="dark:bg-yellow-primary flex items-center gap-2 rounded-lg bg-white p-4 shadow">
+            <span className="text-xl text-white">{icon}</span>
+            <p className="text-xl font-semibold text-gray-900 dark:text-white">
+                {value}
+            </p>
+            <h4 className="text-md font-medium text-gray-700 dark:text-white">
+                {title}
+            </h4>
         </div>
     );
 }
@@ -110,7 +103,7 @@ function ButtonLink({ href, text }: { href: string; text: string }) {
     return (
         <Link
             href={href}
-            className="dark:bg-primary-gray block w-full rounded-lg py-3 text-center font-semibold text-white shadow-md hover:bg-primary-green/90 dark:text-black dark:hover:bg-white"
+            className="block w-full rounded-lg py-3 text-center font-semibold text-white shadow-md hover:bg-primary-green/90 dark:bg-primary-gray dark:text-black dark:hover:bg-white"
         >
             {text}
         </Link>

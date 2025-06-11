@@ -3,8 +3,9 @@ import CreateCartModal from '@/Components/Modals/CreateCartModal';
 import PrimaryButton from '@/Components/PrimaryButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { router } from '@inertiajs/react';
-import { ShoppingBasket, Trash } from 'lucide-react';
+import { Trash } from 'lucide-react';
 import React from 'react';
+import { toast } from 'react-toastify';
 
 interface CartItem {
     id: number;
@@ -20,7 +21,9 @@ export default function CartList({ carts }: CartListProps) {
     const [isCreateCartModalOpen, setCreateCartModalOpen] =
         React.useState(false);
     const handleRemove = (id: number) => {
-        router.delete(route('cart.destroy', { cart_id: id }));
+        router.delete(route('cart.destroy', { cart_id: id }), {
+            onSuccess: () => toast('Cart deleted'),
+        });
     };
     const openCart = (id: number) => {
         router.get(route('cart.show', { id }));
@@ -38,8 +41,12 @@ export default function CartList({ carts }: CartListProps) {
                         <DashboardCard
                             key={cart.id}
                             title={cart.name}
-                            value={`${cart.items.length} items`}
-                            icon={<ShoppingBasket size={46} />}
+                            value={
+                                <span className="mt-4 items-center rounded-[8px] bg-red-primary px-3 py-1 text-sm font-medium text-white">
+                                    {cart.items.length} items
+                                </span>
+                            }
+                            icon={''}
                             onClick={() => openCart(cart.id)}
                             action={
                                 <button
@@ -47,7 +54,7 @@ export default function CartList({ carts }: CartListProps) {
                                         e.stopPropagation();
                                         handleRemove(cart.id);
                                     }}
-                                    className="relative z-10 rounded-full p-2 text-red-500 hover:text-white"
+                                    className="etext-black roundeevd-full relativ e z-10 p-2 text-black"
                                 >
                                     <Trash />
                                 </button>
@@ -55,11 +62,8 @@ export default function CartList({ carts }: CartListProps) {
                         />
                     ))}
                 </div>
-                <div className="px-4 py-6 sm:px-6 lg:px-8">
-                    <PrimaryButton
-                        className="mt-4"
-                        onClick={() => setCreateCartModalOpen(true)}
-                    >
+                <div className="justify-self-end px-4 py-6 sm:px-6 lg:px-8">
+                    <PrimaryButton onClick={() => setCreateCartModalOpen(true)}>
                         Create Cart
                     </PrimaryButton>
                 </div>

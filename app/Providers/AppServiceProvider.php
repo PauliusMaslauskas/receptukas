@@ -15,11 +15,17 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
+    public const HOME = '/';
+
     /**
      * Bootstrap any application services.
      */
     public function boot(): void
     {
+//        if (app()->environment('production')) {
+//            URL::forceScheme('https');
+//        }
+
         Vite::prefetch(concurrency: 3);
     }
 }
