@@ -5,21 +5,21 @@ import { Button } from '@headlessui/react';
 
 export default function SearchSection() {
     return (
-        <div className="mb-8 text-center">
-            <h1 className="text-2xl font-bold text-primary-green dark:bg-gray-800"></h1>
+        <div className="mb-6 text-center">
+            <h1 className="dark:bg-yellow-primary text-2xl font-bold text-primary-green"></h1>
 
-            <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
+            <div className="dark:bg-yellow-primary rounded-lg bg-white p-6 shadow">
                 <div>
-                    <FieldGroup label="Search" name="search">
+                    <FieldGroup label="" name="search">
                         <TextInput
-                            placeholder={'Sreach...'}
-                            className={'w-full'}
+                            placeholder={'Search...'}
+                            className={'bg-yellow-primary w-full'}
                         ></TextInput>
                     </FieldGroup>
                     <div className="grid grid-cols-2 gap-4 rounded-none pt-2">
                         <FieldGroup name="role">
                             <SelectInput
-                                className={'bg-dark-bg'}
+                                className={'bg-yellow-secondary'}
                                 name={'test'}
                                 options={[
                                     {
@@ -31,7 +31,7 @@ export default function SearchSection() {
                         </FieldGroup>
                         <FieldGroup name="role">
                             <SelectInput
-                                className={'bg-dark-bg'}
+                                className={'bg-yellow-secondary'}
                                 name={'test'}
                                 options={[
                                     {
@@ -43,7 +43,7 @@ export default function SearchSection() {
                         </FieldGroup>
                         <FieldGroup name="role">
                             <SelectInput
-                                className={'bg-dark-bg'}
+                                className={'bg-yellow-secondary'}
                                 name={'test'}
                                 options={[
                                     {
@@ -53,7 +53,11 @@ export default function SearchSection() {
                                 ]}
                             ></SelectInput>
                         </FieldGroup>
-                        <Button className={'border border-gray-600'}>
+                        <Button
+                            className={
+                                'border-yellow-secondary h-[85%] w-[85%] place-self-center rounded-md border text-white'
+                            }
+                        >
                             Clear filters
                         </Button>
                     </div>

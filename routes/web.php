@@ -22,10 +22,12 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('cart')->group(function () {
         Route::get('/', [CartController::class, 'index'])->name('carts.index');
-        Route::get('/{id}', [CartController::class, 'show'])->name('cart.show');
-        Route::post('/store', [CartController::class, 'store'])->name('cart.store');
-        Route::delete('/destroy', [CartController::class, 'destroy'])->name('cart.destroy');
+        Route::get('{id}', [CartController::class, 'show'])->name('cart.show');
+        Route::post('store', [CartController::class, 'store'])->name('cart.store');
+        Route::post('add-item', [CartController::class, 'addItem'])->name('cart.addItem');
+        Route::delete('destroy', [CartController::class, 'destroy'])->name('cart.destroy');
         Route::delete('remove-item', [CartController::class, 'removeCartItem'])->name('cart.removeCartItem');
+        Route::delete('remove-items', [CartController::class, 'removeCartItems'])->name('cart.removeCartItems');
     });
 
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
@@ -41,4 +43,4 @@ Route::middleware('auth')->group(function () {
 
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

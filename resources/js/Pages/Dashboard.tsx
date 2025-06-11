@@ -18,7 +18,7 @@ export default function Dashboard() {
                     </a>
                 </div>
 
-                <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
+                <div className="dark:bg-yellow-primary rounded-lg bg-white p-6 shadow">
                     <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-200">
                         Recent Activity
                     </h3>

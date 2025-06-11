@@ -13,7 +13,6 @@ export default function RecipeComponent({ recipe }: RecipeProps): JSX.Element {
     const parsedIngredientGroups = JSON.parse(recipe.ingredient_groups);
 
     const addRecipeItemsToCart = (e) => {
-        e.preventDefault();
         router.post(
             route('cart.store'),
             {
@@ -22,7 +21,7 @@ export default function RecipeComponent({ recipe }: RecipeProps): JSX.Element {
             },
             {
                 onSuccess: () => {
-                    toast('Recipe cart created');
+                    toast.success('Recipe cart created');
                 },
             },
         );
@@ -42,7 +41,7 @@ export default function RecipeComponent({ recipe }: RecipeProps): JSX.Element {
                     <div className={'text-3xl font-bold'}>{recipe.name}</div>
                     <div>
                         <PrimaryButton onClick={(e) => addRecipeItemsToCart(e)}>
-                            Add items to cart
+                            Create recipe cart
                         </PrimaryButton>
                     </div>
                 </div>
@@ -65,17 +64,17 @@ export default function RecipeComponent({ recipe }: RecipeProps): JSX.Element {
                     ))}
                 </div>
                 <div className="flex items-center justify-center gap-4 py-4">
-                    <div className="flex aspect-square w-24 flex-col items-center justify-center text-center dark:bg-gray-800">
+                    <div className="dark:bg-yellow-primary flex aspect-square w-24 flex-col items-center justify-center text-center">
                         <Flame />
                         <p className="pt-1 text-sm">Calories</p>
                         <p className="text-lg">{recipe.calories}</p>
                     </div>
-                    <div className="flex aspect-square w-24 flex-col items-center justify-center text-center dark:bg-gray-800">
+                    <div className="dark:bg-yellow-primary flex aspect-square w-24 flex-col items-center justify-center text-center">
                         <Timer />
                         <p className="pt-1 text-sm">Cook time</p>
                         <p className="text-lg">{recipe.time_to_complete} min</p>
                     </div>
-                    <div className="flex aspect-square w-24 flex-col items-center justify-center text-center dark:bg-gray-800">
+                    <div className="dark:bg-yellow-primary flex aspect-square w-24 flex-col items-center justify-center text-center">
                         <Timer />
                         <p className="pt-1 text-sm">Prep time</p>
                         <p className="text-lg">{recipe.prep_time} min</p>

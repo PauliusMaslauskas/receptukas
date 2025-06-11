@@ -18,7 +18,7 @@ export default function SelectInput({
                 id={name}
                 name={name}
                 {...props}
-                className={`form-select z-50 mt-1 w-full border-gray-600 focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400 ${
+                className={`form-select z-50 mt-1 w-full rounded-md border-none text-black focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400 ${
                     error
                         ? 'border-red-400 focus:border-red-400 focus:ring-red-400'
                         : ''

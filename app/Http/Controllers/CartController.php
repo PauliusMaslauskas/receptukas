@@ -57,6 +57,7 @@ class CartController extends Controller
 
     }
 
+
     public function removeCartItem(Request $request): RedirectResponse
     {
         $request->validate([
@@ -67,4 +68,30 @@ class CartController extends Controller
 
         return redirect()->route('cart.show', $request->input('cart_id'));
     }
+
+    public function removeCartItems(Request $request)
+    {
+
+    }
+
+    public function addItem(Request $request)
+    {
+        $request->validate([
+            'cart_id' => 'required|exists:carts,id',
+            'product_id' => 'required|exists:products,id',
+        ]);
+
+        $cart = Cart::findOrFail($request->cart_id);
+
+        $item = [
+            'product_id' => $request->product_id,
+            'quantity' => 1
+        ];
+
+        $this->cartService->addOrUpdateCartItem($cart, $item);
+
+    }
+
+
 }
+

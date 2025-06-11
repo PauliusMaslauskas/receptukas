@@ -18,15 +18,15 @@ export default function DashboardCard({
     return (
         <div
             onClick={onClick}
-            className="mx-auto flex min-h-[120px] w-full max-w-lg transform cursor-pointer items-center justify-between rounded-xl bg-white p-6 shadow-md transition-transform dark:border-gray-700 dark:bg-gray-800"
+            className="mx-auto flex min-h-[120px] w-full max-w-lg transform cursor-pointer items-center justify-between rounded-xl bg-white p-6 shadow-md transition-transform dark:border-gray-700 dark:bg-yellow-primary"
         >
             <div className="flex items-center gap-4">
-                <span className="text-5xl text-blue-500">{icon}</span>
+                <span className="text-5xl">{icon}</span>
                 <div>
-                    <h4 className="text-base font-medium text-gray-700 dark:text-gray-300">
+                    <h4 className="pb-2 text-xl font-bold text-gray-700 dark:text-white">
                         {title}
                     </h4>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                    <p className="dark:text-balck text-md text-gray-900">
                         {value}
                     </p>
                 </div>
