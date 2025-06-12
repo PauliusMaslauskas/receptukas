@@ -14,11 +14,11 @@ export default function ProductCard({
     return (
         <div
             onClick={onClick}
-            className="flex max-w-lg transform cursor-pointer justify-center rounded-xl bg-white p-4 shadow-md transition-transform dark:border-gray-500 dark:bg-gray-700"
+            className="flex min-w-[106px] max-w-lg transform cursor-pointer justify-center rounded-xl bg-white p-2 shadow-md transition-transform dark:bg-black"
         >
             <div className="flex items-center gap-4">
                 <div>
-                    <p className="text-xl font-bold text-gray-900 dark:text-white">
+                    <p className="text-center text-[15px] font-bold text-white dark:text-white">
                         {value}
                     </p>
                 </div>

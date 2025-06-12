@@ -33,7 +33,7 @@ export default function ProductsModal({
     }, [isOpen]);
 
     const renderCategories = () => (
-        <div className={'gap 2 grid grid-cols-3 gap-4 py-12'}>
+        <div className={'gap 2 grid grid-cols-3 gap-4 py-8'}>
             {categories.map((category) => (
                 <div
                     key={category.id}
@@ -46,7 +46,7 @@ export default function ProductsModal({
     );
 
     const renderProducts = (category) => (
-        <div className={'gap 2 grid grid-cols-3 gap-4 py-12'}>
+        <div className={'gap 2 grid grid-cols-3 gap-4 py-8'}>
             {category.products.map((product) => (
                 <div
                     key={product.id}
@@ -75,19 +75,19 @@ export default function ProductsModal({
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} show={isOpen}>
-            <form className="space-y-4 p-6">
-                {selectedCategory !== null && (
-                    <div>
-                        <button
-                            className={'text-white'}
-                            onClick={() => setSelectedCategory(null)}
-                        >
-                            <ArrowLeft />
-                        </button>
-                    </div>
-                )}
+            <form className="p-6">
                 <div>
-                    <div className={'flex w-full'}>
+                    <div className={'flex w-full items-center gap-1'}>
+                        {selectedCategory !== null && (
+                            <div>
+                                <button
+                                    className={'text-red-primary'}
+                                    onClick={() => setSelectedCategory(null)}
+                                >
+                                    <ArrowLeft />
+                                </button>
+                            </div>
+                        )}
                         <TextInput
                             placeholder={'Search products...'}
                             className={'w-full'}
@@ -99,14 +99,14 @@ export default function ProductsModal({
                         {isLoading ? (
                             <div
                                 className={
-                                    'py-12 text-center text-xl text-white'
+                                    'py-6 text-center text-xl text-black'
                                 }
                             >
                                 Loading.....
                             </div>
                         ) : searchValue != '' ? (
                             <div
-                                className={'gap 2 grid grid-cols-3 gap-4 py-12'}
+                                className={'gap 2 grid grid-cols-3 gap-4 py-8'}
                             >
                                 {filerProducts.map((product) => (
                                     <ProductCard
@@ -123,6 +123,22 @@ export default function ProductsModal({
                                         value={product.name}
                                     ></ProductCard>
                                 ))}
+                                {filerProducts.length === 0 && (
+                                    <>
+                                        <div
+                                            className={
+                                                'w-full text-center text-xl'
+                                            }
+                                        ></div>
+                                        <div
+                                            className={
+                                                'w-full text-center text-black'
+                                            }
+                                        >
+                                            No products found
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         ) : selectedCategory ? (
                             renderProducts(selectedCategory)
@@ -138,8 +154,9 @@ export default function ProductsModal({
                         onClick={() => {
                             onClose();
                             setSelectedCategory(null);
+                            setSearchValue('');
                         }}
-                        className="rounded-lg bg-gray-100 px-4 py-2 text-sm text-gray-600 hover:bg-gray-200"
+                        className="rounded-lg bg-red-primary px-4 py-2 text-sm text-white"
                     >
                         Cancel
                     </button>
