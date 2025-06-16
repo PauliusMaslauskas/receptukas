@@ -42,12 +42,12 @@ export default function Login({
                 <form onSubmit={submit} className="mx-auto w-full max-w-sm">
                     <div
                         className={
-                            'self-start pb-12 text-5xl font-bold text-white'
+                            'self-start pb-12 text-5xl font-bold text-black'
                         }
                     >
                         Log in
                     </div>
-                    <div>
+                    <div className="mx-auto w-full max-w-sm rounded-lg p-6 text-black shadow dark:bg-yellow-primary">
                         <InputLabel htmlFor="email" value="Email" />
 
                         <TextInput
@@ -55,49 +55,49 @@ export default function Login({
                             type="email"
                             name="email"
                             value={data.email}
-                            className="mt-1 block w-full"
+                            className="mt-1 block w-full bg-yellow-secondary"
                             autoComplete="username"
                             isFocused={true}
                             onChange={(e) => setData('email', e.target.value)}
                         />
 
                         <InputError message={errors.email} className="mt-2" />
-                    </div>
 
-                    <div className="mt-4">
-                        <InputLabel htmlFor="password" value="Password" />
+                        <div className="mt-4">
+                            <InputLabel htmlFor="password" value="Password" />
 
-                        <TextInput
-                            id="password"
-                            type="password"
-                            name="password"
-                            value={data.password}
-                            className="mt-1 block w-full"
-                            autoComplete="current-password"
-                            onChange={(e) =>
-                                setData('password', e.target.value)
-                            }
-                        />
-
-                        <InputError
-                            message={errors.password}
-                            className="mt-2"
-                        />
-                    </div>
-
-                    <div className="mt-4 block">
-                        <label className="flex items-center">
-                            <Checkbox
-                                name="remember"
-                                checked={data.remember}
+                            <TextInput
+                                id="password"
+                                type="password"
+                                name="password"
+                                value={data.password}
+                                className="mt-1 block w-full bg-yellow-secondary"
+                                autoComplete="current-password"
                                 onChange={(e) =>
-                                    setData('remember', e.target.checked)
+                                    setData('password', e.target.value)
                                 }
                             />
-                            <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">
-                                Remember me
-                            </span>
-                        </label>
+
+                            <InputError
+                                message={errors.password}
+                                className="mt-2"
+                            />
+                        </div>
+
+                        <div className="mt-4 block">
+                            <label className="flex items-center">
+                                <Checkbox
+                                    name="remember"
+                                    checked={data.remember}
+                                    onChange={(e) =>
+                                        setData('remember', e.target.checked)
+                                    }
+                                />
+                                <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">
+                                    Remember me
+                                </span>
+                            </label>
+                        </div>
                     </div>
 
                     <div className="mt-4 flex items-center justify-between">
