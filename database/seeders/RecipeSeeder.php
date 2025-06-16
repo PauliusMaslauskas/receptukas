@@ -21,26 +21,26 @@ class RecipeSeeder extends Seeder
             'description' => 'Growing up I was never a big fan of beetroot. I think this was due to the highly acidic pickled stuff you get in jars, which was pretty much the only type of beetroot available back then. My grandmother used it on all her salads and everything else on the plate would be tinted purple and tainted with its earthy, sour taste.',
             'ingredient_groups' => json_encode([
                 [
-                    "name" => "For the soup",
-                    "items" => [
-                        "Beetroot: 200 g | 7 oz boiled & cooled beetroot",
-                        "Cucumber: 100 g | 3.5 oz cucumber",
-                        "Eggs: 2 hard-boiled eggs",
-                        "Kefir: 1.5 litres | 3 pints kefir",
-                        "Dill: Bunch fresh dill",
-                        "Lemon: Juice of ½ a lemon (optional)",
-                        "Salt: to taste",
+                    'name' => 'For the soup',
+                    'items' => [
+                        'Beetroot: 200 g | 7 oz boiled & cooled beetroot',
+                        'Cucumber: 100 g | 3.5 oz cucumber',
+                        'Eggs: 2 hard-boiled eggs',
+                        'Kefir: 1.5 litres | 3 pints kefir',
+                        'Dill: Bunch fresh dill',
+                        'Lemon: Juice of ½ a lemon (optional)',
+                        'Salt: to taste',
                     ],
                 ],
                 [
-                    "name" => "For the side dish",
-                    "items" => [
-                        "Potato: 200 g | 7 oz",
+                    'name' => 'For the side dish',
+                    'items' => [
+                        'Potato: 200 g | 7 oz',
                     ],
-                ]
+                ],
             ]),
             'image_path' => '/images/recipe_image_2.png',
-            'tags' => json_encode(["cold", "soup", "beats", "red", "summer", "refreshing"]),
+            'tags' => json_encode(['cold', 'soup', 'beats', 'red', 'summer', 'refreshing']),
             'calories' => '1000',
             'time_to_complete' => '20',
             'prep_time' => '5',

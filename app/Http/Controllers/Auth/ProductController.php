@@ -9,11 +9,7 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-
-    public function __construct()
-    {
-
-    }
+    public function __construct() {}
 
     public function index(Request $request): mixed
     {
@@ -22,6 +18,7 @@ class ProductController extends Controller
         if ($request->has('search')) {
             $query->where('name', 'like', '%'.$request->get('search').'%');
         }
+
         return $query->select('id', 'name')->get();
     }
 
@@ -29,5 +26,4 @@ class ProductController extends Controller
     {
         return response()->json(ProductCategory::with('products')->get());
     }
-
 }

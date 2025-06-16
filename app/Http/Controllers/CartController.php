@@ -11,9 +11,7 @@ use Inertia\Inertia;
 
 class CartController extends Controller
 {
-    public function __construct(public CartService $cartService)
-    {
-    }
+    public function __construct(public CartService $cartService) {}
 
     public function index()
     {
@@ -37,7 +35,7 @@ class CartController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'recipe_id' => 'nullable|int'
+            'recipe_id' => 'nullable|int',
         ]);
 
         $user = auth()->user();
@@ -57,7 +55,6 @@ class CartController extends Controller
 
     }
 
-
     public function removeCartItem(Request $request): RedirectResponse
     {
         $request->validate([
@@ -69,10 +66,7 @@ class CartController extends Controller
         return redirect()->route('cart.show', $request->input('cart_id'));
     }
 
-    public function removeCartItems(Request $request)
-    {
-
-    }
+    public function removeCartItems(Request $request) {}
 
     public function addItem(Request $request)
     {
@@ -85,13 +79,10 @@ class CartController extends Controller
 
         $item = [
             'product_id' => $request->product_id,
-            'quantity' => 1
+            'quantity' => 1,
         ];
 
         $this->cartService->addOrUpdateCartItem($cart, $item);
 
     }
-
-
 }
-

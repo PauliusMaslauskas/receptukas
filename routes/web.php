@@ -3,7 +3,6 @@
 use App\Http\Controllers\Auth\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\IngredientsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecipeController;
 use Illuminate\Support\Facades\Route;
@@ -33,7 +32,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/categories', [ProductController::class, 'getProductsWithCategories'])->name('product.categories');
 
-
     Route::prefix('recipe')->group(function () {
         Route::get('/', [RecipeController::class, 'index'])->name('recipes.index');
         Route::get('/create', [RecipeController::class, 'create'])->name('recipe.create');
@@ -43,4 +41,4 @@ Route::middleware('auth')->group(function () {
 
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

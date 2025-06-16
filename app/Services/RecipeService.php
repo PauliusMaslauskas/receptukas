@@ -8,17 +8,16 @@ use Illuminate\Http\RedirectResponse;
 
 class RecipeService
 {
-
     public function createRecipe(array $data): RedirectResponse
     {
         $user = auth()->user();
         $filePath = null;
         if (request()->hasFile('image_path')) {
             $filePath = request()->file('image_path')->store('recipes', 'public');
-            $filePath = request()->getSchemeAndHttpHost() . '/storage/' . $filePath;
+            $filePath = request()->getSchemeAndHttpHost().'/storage/'.$filePath;
         }
 
-        //TODO REFACTOR INGREDIENT GROUPING TO SEPARATE TABLE
+        // TODO REFACTOR INGREDIENT GROUPING TO SEPARATE TABLE
 
         $recipe = Recipe::create([
             'author_id' => $user->id,
@@ -42,16 +41,13 @@ class RecipeService
             RecipeInstruction::create([
                 'recipe_id' => $recipe->id,
                 'step_number' => $stepNumber,
-                'instruction' => $instructions
+                'instruction' => $instructions,
             ]);
 
             $stepNumber++;
         }
 
-
         return redirect()->route('recipe.show', $recipe->id);
 
     }
 }
-
-
