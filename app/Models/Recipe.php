@@ -10,13 +10,13 @@ use Illuminate\Notifications\Notifiable;
 class Recipe extends Model
 {
     use HasFactory;
-    use SoftDeletes;
     use Notifiable;
+    use SoftDeletes;
 
     protected $guarded = ['id'];
 
     protected $casts = [
-        'ingredients' => 'array'
+        'ingredients' => 'array',
     ];
 
     public function products()

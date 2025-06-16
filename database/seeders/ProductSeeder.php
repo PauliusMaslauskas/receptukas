@@ -107,11 +107,10 @@ class ProductSeeder extends Seeder
                     'name' => $product['name'],
                     'slug' => $product['name'],
                     'category_id' => $category->id,
-                    'price' => $product['price']
+                    'price' => $product['price'],
                 ]);
             }
         }
-
 
     }
 }

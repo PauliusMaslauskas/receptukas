@@ -9,7 +9,7 @@ use Illuminate\Http\RedirectResponse;
 
 class CartService
 {
-    public function createCart($userId, string $name, int $recipeId = null): RedirectResponse
+    public function createCart($userId, string $name, ?int $recipeId = null): RedirectResponse
     {
 
         $cart = Cart::create([
@@ -24,10 +24,11 @@ class CartService
                 $this->addCartItem($cart,
                     [
                         'product_id' => $item->product_id,
-                        'quantity' => $item->quantity
+                        'quantity' => $item->quantity,
                     ]);
             }
         }
+
         return redirect('/cart');
     }
 
@@ -37,13 +38,14 @@ class CartService
 
         if ($itemInCart) {
             $itemInCart->increment('quantity', $item['quantity']);
+
             return $itemInCart;
         }
 
         return $cart->items()->create([
-                'product_id' => $item['product_id'],
-                'quantity' => $item['quantity']
-            ]
+            'product_id' => $item['product_id'],
+            'quantity' => $item['quantity'],
+        ]
         );
     }
 
@@ -59,7 +61,6 @@ class CartService
         return redirect('/cart');
     }
 
-
     public function removeCartItem($cartId, $cartItemId)
     {
 
@@ -70,6 +71,4 @@ class CartService
             $cartItem->delete();
         }
     }
-
-
 }

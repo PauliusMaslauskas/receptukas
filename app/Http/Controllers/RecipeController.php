@@ -10,25 +10,23 @@ use Inertia\Inertia;
 
 class RecipeController extends Controller
 {
-
-    public function __construct(public RecipeService $recipeService)
-    {
-
-    }
+    public function __construct(public RecipeService $recipeService) {}
 
     public function index()
     {
         $recipes = Recipe::all();
+
         return Inertia::render('Welcome', [
-            'recipes' => $recipes ?? []
+            'recipes' => $recipes ?? [],
         ]);
     }
 
     public function show($id)
     {
         $recipe = Recipe::with('instructions')->find($id);
+
         return Inertia::render('Recipes/RecipeView', [
-            'recipe' => $recipe
+            'recipe' => $recipe,
         ]);
     }
 

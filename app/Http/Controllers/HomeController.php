@@ -14,7 +14,7 @@ class HomeController extends Controller
     {
         $recipes = Recipe::all();
         $usersCount = User::count();
-        
+
         return Inertia::render('Welcome', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),

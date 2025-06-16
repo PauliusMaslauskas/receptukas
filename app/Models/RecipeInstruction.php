@@ -11,8 +11,8 @@ use Illuminate\Notifications\Notifiable;
 class RecipeInstruction extends Model
 {
     use HasFactory;
-    use SoftDeletes;
     use Notifiable;
+    use SoftDeletes;
 
     protected $guarded = ['id'];
 

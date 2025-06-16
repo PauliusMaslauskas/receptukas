@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             ProductSeeder::class,
-            RecipeSeeder::class
+            RecipeSeeder::class,
         ]);
     }
 }
